@@ -1,0 +1,1 @@
+<script src="${base }module/city-select/city-select.js"></script>

@@ -1,0 +1,47 @@
+<html>
+<meta charset="UTF-8">
+<head>
+<title>jQuery Easy-Paging Test</title>
+<style>
+#paging {
+	display: block;
+}
+
+#paging li {
+	display: inline-block;
+	margin-left: 20px;
+}
+</style>
+</head>
+
+<body>
+
+	<ol id="paging">
+		<li>上一页</li>
+		<li>第 #n 页</li>
+		<li>第 #n 页</li>
+		<li>第 #c 页</li>
+		<li>第 #n 页</li>
+		<li>第 #n 页</li>
+		<li>第 #n 页</li>
+		<li>第 #n 页</li>
+		<li>下一页</li>
+	</ol>
+
+	<div id="output"></div>
+
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="jquery.paging.min.js"></script>
+	<script src="jquery.easy-paging.js"></script>
+	<script>
+
+            $("#paging").easyPaging(12, {
+                onSelect: function(page) {
+                    $("#output").html("You are on page " + page + " and you will select elements "+(this.slice[0]+1) + "-" + this.slice[1]+"!!!");
+                }
+            });
+            
+        </script>
+
+</body>
+</html>

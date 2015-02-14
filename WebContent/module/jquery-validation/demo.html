@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<base href="../../" >
+	<meta charset="utf-8">
+	<title>demo</title>
+
+	<!-- 尽量使用bootstrap提供的样式 -->
+	<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+	
+	<!-- 在bootstrap的基础上，需要对bootstrap进行修改的在base.css中进行修改 -->
+	<link href="css/base.css" rel="stylesheet">
+
+
+	<script src="module/jquery-validation/lib/jquery.js"></script>
+	<script src="module/jquery-validation/dist/jquery.validate.js"></script>
+	<script src="module/jquery-validation/messages_zh.js"></script>
+	<script src="module/jquery-validation/jquery.validation.toomao.js"></script>
+	<script>
+	$(function(){
+		$("#form-test").validate({
+			rules: {
+				math: {
+					equal: 11
+				}
+			}
+		});
+	});
+	</script>
+</head>
+<body style="padding:20px;">
+
+	<form id="form-test" role="form" class="form-horizontal">
+	  <div class="form-group">
+	  	<label for="number" class="col-sm-2 control-label">textarea</label>
+	    <div class="col-sm-10">
+	    	<input id="number" name="number" class="form-control" minlength="3" maxlength="15" required number="true">
+	    </div>
+	  </div>
+	 
+	  <div class="form-group">
+		  <label for="math" class="col-sm-2 control-label">7 + 4 =</label>
+		  <div class="col-sm-10">
+		  	<input id="math" name="math" class="form-control">
+		  </div> 
+		</div>
+		<input type="submit" />
+	</form>
+	
+</body>
+<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+</html>
