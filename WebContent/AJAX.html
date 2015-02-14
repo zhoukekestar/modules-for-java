@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>AJAX</title>
+<script src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+</head>
+<body>
+	<button>ajax</button>
+	<script>
+		$(function(){
+			$("button").click(function(){
+				$.ajax({
+					dataType : "jsonp",
+					url: "/web-modules/ajax",
+					success:function(d)
+					{
+						alert(d.id);	
+					}
+				})
+			});
+		})
+	</script>
+</body>
+</html>
