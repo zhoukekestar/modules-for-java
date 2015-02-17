@@ -1,4 +1,8 @@
-// $.alertMsg 
+/* ========================================================================
+ * web-modules: aertMsg.js v1.0.0
+ * ========================================================================
+ * Copyright 2014-2015 zhoukekestar.
+ * ======================================================================== */
 ;(function($){
 	$.alertMsg = function(options)
 	{
@@ -65,9 +69,32 @@
 	};
 })(jQuery);
 
-// jquery form 
+
+/* ========================================================================
+ * web-modules: jquery.form.js v1.0.0
+ * ========================================================================
+ * Copyright 2014-2015 zhoukekestar.
+ * ======================================================================== */
 ;(function($){
 	var validFunc = {
+		type: function(ele){
+			if ($(ele).attr("type") == undefined)
+				return true;
+			var t = $(ele).attr("type");
+			var reg;
+			if (t === "email")
+				reg = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
+			else if (t === "number")
+			{
+				if ($(ele).val() === "") return false;
+				reg = /^\d*$/;
+			}
+			else if (t === "cellphone")
+				reg = /^[1][3,4,5,7,8][0-9]{9}$/;
+			else
+				reg = /^.*$/;
+			return reg.test($(ele).val());
+		},
 		// Form validation: required.
 		required: function(ele){
 			if (
@@ -127,8 +154,11 @@
 			return false;
 		}
 		
-		// pattern
-		if (!validFunc.pattern(ele) || !validFunc.equalto(ele) || !validFunc.func(ele))
+		
+		if (!validFunc.type(ele) || 
+			!validFunc.pattern(ele) || 
+			!validFunc.equalto(ele) || 
+			!validFunc.func(ele))
 		{
 			var msg = $(ele).data("msg-err");
 			if (msg == undefined)
