@@ -1,96 +1,35 @@
 /* ========================================================================
- * web-modules: aertMsg.js v1.0.0
- * ========================================================================
- * Copyright 2014-2015 zhoukekestar.
- * ======================================================================== */
-;(function($){
-	$.alertMsg = function(options)
-	{
-
-		// If options is string, set default value and overwrite options's content.
-		if (typeof(options) == "string")
-		{
-			options = $.extend({},$.alertMsg.defaults, {content:options});
-		}
-		// Mix defaults and options
-		else
-		{			
-			options = $.extend({},$.alertMsg.defaults, options);
-		}
-		
-		// Add html to body, then show it.
-		var html = '<div class="alert-msg-content" style="display:none">' + options.content + '</div>'
-		$(options.body).append(html);
-		$(".alert-msg-content")
-		  .css({
-		      "width":options.width,
-		      "margin-left":-options.width/2,
-		      "opacity":0
-		  })
-		  .show();
-
-        // Get height value and ajust it to middle height.
-		var h = $(".alert-msg-content").css("height");
-		h = h.substring(0, h.indexOf("px"));
-		if (options.debug)
-		  console.log("[alertMsg] height:" + h + " and (h/2 + 12):" + (-h/2-12));
-		$(".alert-msg-content").css({
-			"margin-top":-h/2-12
-			//add padding length.
-		});
-		
-		// Show & Hide.
-		$(".alert-msg-content").animate({opacity:'1'},"slow");
-		if (options.autohide)
-		{
-			setTimeout(function(){
-				$(".alert-msg-content").animate({opacity:'0'},"slow", function(){
-					$(".alert-msg-content").remove();
-					options.done();
-				});
-			},options.time);
-		}
-	};
-	$.alertMsg.defaults = {
-        width:160, 
-        content:"Not set content's value.",
-        done:function(){},
-        time:1200,
-        autohide:true,
-        body:"body",
-        debug:false
-    };
-	$.alertMsg.remove = function(done)
-	{
-		$(".alert-msg-content").animate({opacity:'0'},"slow", function(){
-			$(".alert-msg-content").remove();
-			done == undefined ? "":done();
-		});
-	};
-})(jQuery);
-
-
-/* ========================================================================
  * web-modules: jquery.form.js v1.0.0
  * ========================================================================
  * Copyright 2014-2015 zhoukekestar.
  * ======================================================================== */
-;(function($){
+
+;(function(factory){
+	if (typeof define == "function" && define.amd) {
+		define("H5Form", ["jquery", "alertMsg"], factory)
+	} else {
+		factory(jQuery);
+	}
+}(function($){
+
 	var validFunc = {
+		// Form validation: type=[email,number,cellphone]
 		type: function(ele){
 			if ($(ele).attr("type") == undefined)
 				return true;
 			var t = $(ele).attr("type");
 			var reg;
 			if (t === "email")
-				reg = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
+				reg = /((([a-zA-Z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-zA-Z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-zA-Z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-zA-Z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-zA-Z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-zA-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-zA-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-zA-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?/;
 			else if (t === "number")
 			{
 				if ($(ele).val() === "") return false;
-				reg = /^\d*$/;
+				reg = /-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?/;
 			}
 			else if (t === "cellphone")
 				reg = /^[1][3,4,5,7,8][0-9]{9}$/;
+			else if (t === "url")
+				reg = /(https?|ftp):\/\/(((([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-zA-Z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-zA-Z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-zA-Z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-zA-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-zA-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-zA-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?/;
 			else
 				reg = /^.*$/;
 			return reg.test($(ele).val());
@@ -111,6 +50,7 @@
 			var reg = new RegExp($(ele).attr("pattern"));
 			return reg.test($(ele).val());
 		},
+		// Form validation: data-equalto=[selector].
 		equalto: function(ele){
 			if ($(ele).data("equalto") == undefined)
 				return true;
@@ -118,6 +58,7 @@
 				return true;
 			return false;
 		},
+		// Form validation: data-func=[func].
 		func: function(ele){
 			if ($(ele).data("func") == undefined)
 				return true;
@@ -134,7 +75,6 @@
 		},
 		// Show Success message
 		success: function(ele){
-			
 			$(ele).removeClass("has-error").addClass("has-success").find(".input-tooltip").hide();
 		}
 	};
@@ -154,7 +94,10 @@
 			return false;
 		}
 		
-		
+		// type
+		// pattern
+		// equalto
+		// func
 		if (!validFunc.type(ele) || 
 			!validFunc.pattern(ele) || 
 			!validFunc.equalto(ele) || 
@@ -173,7 +116,7 @@
 	}
 	
 	// Form validation init.
-	$("input").each(function(){
+	$("form[data-role='H5Form']").find("input").each(function(){
 		// Get group
 		var group = $(this).parents(".form-group")[0];
 		
@@ -184,7 +127,7 @@
 		$(group).find(".input-tooltip").hide();
 		
 		// valid
-		$(this).bind("blur", function(){
+		$(this).blur(function(){
 			validInput(this);
 		});
 	});
@@ -198,6 +141,8 @@
 			async: true,
 			data: "",
 			success: function(d){
+				
+				// specfic code
 				if (d.code != undefined && d.code == 0)
 					options.afterSuccess(d);
 			},
@@ -205,6 +150,7 @@
 			error: function(d){$.alertMsg(d.status + " 网络错误");}
 		}, options);
 		
+		// Before submit form, valid this form.
 		var validOK = true;
 		$(this).find("input").each(function(){
 			
@@ -217,8 +163,15 @@
 			$.alertMsg("请正确填写表单");
 			return;
 		}
+		
+		// Get first selected form
 		var firstForm = $(this)[0];
 		
+		// Get first selected form's data, set its value to options.
+		// 1. data-method
+		// 2. data-action
+		// 3. data-data-type
+		// 4. data-async
 		if ($(firstForm).attr("method") != undefined)
 			options.type = $(firstForm).attr("method");
 		if ($(firstForm).attr("action") != undefined)
@@ -228,6 +181,7 @@
 		if ($(firstForm).data("async") != undefined)
 			options.async = $(firstForm).data("async");
 		
+		// Get form's data
 		options.data = $(this).serialize();
 			
 		$.ajax({
@@ -240,6 +194,4 @@
 			error 	: options.error
 		});
 	};
-	
-	$("html").trigger("formValidatorOK");
-}(jQuery));
+}));

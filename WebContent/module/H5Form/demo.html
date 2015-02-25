@@ -5,14 +5,13 @@
 <title></title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="jquery.form.css">
-<script src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="H5Form.css">
+<!-- <script src="//cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
 
 </head>
 <body>
 	<div style="margin-top:20px;">
-		<form id="form-login" method="post" action="http://192.168.0.199:8866/toomao_api/shop/20">
+		<form id="form-login" method="post" action="http://192.168.0.199:8866/toomao_api/shop/20" data-role="H5Form">
 			<div class="form-group inline">
 				<label class="control-label">必填字段</label>
 				<input type="text" class="form-control" name="must" placeholder="必填" required>
@@ -39,7 +38,7 @@
 				<label class="control-label">验证码</label>
 				<div class="row">
 					<div class="col-xs-8">
-						<input type="email" class="form-control" name="check" placeholder="自定义 输入123" data-msg-err="验证码错误" data-func="checkcode">
+						<input type="text" class="form-control" name="check" placeholder="自定义 输入123" data-msg-err="验证码错误" data-func="checkcode">
 					</div>
 					<div class="col-xs-4">
 						<button type="button" class="form-control">获取</button>
@@ -61,34 +60,22 @@
 		</form>
 		
 		<form id="abc" action="">
-			<input type="hidden" name="a" value="abc">
+			<div class="form-group inline">
+				<label class="control-label">必填字段</label>
+				<input type="text" class="form-control" name="must" placeholder="必填" required>
+			</div>
+			<div class="form-group inline">
+				<label class="control-label">正则1</label>
+				<input type="text" class="form-control" name="reg-1" placeholder="正则  默认显示  6个字符" pattern="^[0-9]{6}$">
+			</div>
 		</form>
 		
 		<form>
 			<input type="text" name="zkk" value="zkk123">
 		</form>
 	</div>
-	<script>
-		$(function(){
-			$("html").bind("formValidatorOK", function(){
-				$.formValidator.addMethod("checkcode", function(ele){
-					if ($(ele).val() == "123")
-						return true;
-					return false;
-				});
-			});
-			
-			$("button").click(function(e){
-				$("form").formSubmit({
-					success:function(d){
-						console.log(d);
-					}
-				});
-				e.preventDefault();
-			});
-		})
-		
-	</script>
-	<script src="jquery.form.js" async></script>
+	
+	<script type="text/javascript" data-main="/web-modules/module/H5Form/main.js" src="//cdn.bootcss.com/require.js/2.1.15/require.min.js"></script>
+	<!-- <script src=""></script> -->
 </body>
 </html>
