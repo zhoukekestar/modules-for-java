@@ -3,16 +3,24 @@
     <head>
         <title> </title>
 		<meta charset="utf-8" />
-		<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
-        <script src="citySelect.js"></script>
     </head>
     <body>
 		<select></select>
 		<select></select>
 		<select></select>
+		<script src="//cdn.bootcss.com/require.js/2.1.15/require.min.js"></script>
 		<script>
+		require.config({
+			baseUrl: './',
+			paths: {
+				jquery: 'http://cdn.bootcss.com/jquery/2.1.3/jquery.min',
+				citySelect: 'citySelect',
+			}
+		});
+		
+		require(["citySelect"], function(){			
 			$("select").citySelect([121,908,1210606]);
-			//$("select").toomaoCitySelect();
+		})
 		</script>
     </body>
 </html>

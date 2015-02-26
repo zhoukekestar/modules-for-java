@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="share-wx.js"></script>
+</head>
+<body>
+	<h1>hi</h1>
+	<script>
+	$.shareWXConfig({
+	    appId: 'wx5298b809a29cb9b0', // 必填，公众号的唯一标识
+	    timestamp: 1423817872474, // 必填，生成签名的时间戳
+	    nonceStr: '295c6ecd612c43f9', // 必填，生成签名的随机串
+	    signature: 'd54e856058150bf28f615f1c4c034cb6648675ac',// 必填，签名，见附录1
+	    success:function(){
+	    	
+	    	$.shareWX({
+			    title: 'z-title', // 分享标题
+			    link: 'http://www.baidu.com', // 分享链接
+			    imgUrl: 'http://img01.taobaocdn.com/imgextra/i1/776955218/TB2nIeFbFXXXXXAXXXXXXXXXXXX_!!776955218.png', // 分享图标
+			    success: function () { 
+			       alert("z-success");
+			    },
+			    cancel: function () { 
+			        // 用户取消分享后执行的回调函数
+			        alert("z-cancel");
+			    }
+			});
+	    }
+	});
+	</script>
+</body>
+</html>

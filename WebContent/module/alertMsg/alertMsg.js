@@ -2,9 +2,9 @@
 	if ( typeof define === "function" && define.amd ) {
 		define("alertMsg", [ "jquery" ], factory );
 	} else {
-		factory( jQuery, console.log );
+		factory( jQuery );
 	}
-}( function( $, log ) {
+}( function( $ ) {
 	$.alertMsg = function( options ) {
 
 		if ( typeof( options ) == "string" ) {
@@ -18,7 +18,7 @@
 		}
 
 		var alertMsgCSS = {
-			color: "#FF",
+			"color": "#FFF",
 			"font-size": "18px",
 			"background-color": "rgba(0, 0, 0, 0.8)",
 			"border-radius": "10px",
@@ -40,15 +40,8 @@
 		$( options.body ).append( '<div class="alert-msg-content" style="display:none">' + options.content + '</div>' );
 		$( ".alert-msg-content" ).css( alertMsgCSS ).show();
 
-        // Get height value and ajust it to middle height.
-		var h = $( ".alert-msg-content" ).css( "height" );
-		h = h.substring( 0, h.indexOf( "px" ) );
-		if ( options.debug )
-		  log( "[alertMsg] height:" + h + " and (h/2 + 12):" + ( -h / 2 - 12 ) );
-		$( ".alert-msg-content" ).css( {
-			"margin-top": ( -h / 2 - 12 )
-			//add padding length.
-		} );
+		// middle height
+		$( ".alert-msg-content" ).css( {"margin-top": ( -$(".alert-msg-content").outerHeight() / 2) } );
 
 		// Show & Hide.
 		$( ".alert-msg-content" ).animate( { opacity: 1 }, "slow" );
@@ -65,8 +58,8 @@
 
 	$.alertMsg.defaults = {
         width: 160,
-        content: "Not set content's value.",
-        done: function() {},
+        content: "?",
+        done: null,
         time:1200,
         autohide: true,
         body: "body",
@@ -76,7 +69,9 @@
 	$.alertMsg.remove = function( done ) {
 		$( ".alert-msg-content" ).animate( { opacity: 0 }, "slow", function() {
 			$( ".alert-msg-content" ).remove();
-			done === undefined ? "" : done();
+			done === null ? "" : done();
 		} );
 	};
-} ) );
+	
+	return $;
+}));
