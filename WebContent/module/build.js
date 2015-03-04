@@ -1,10 +1,14 @@
 ({
-    baseUrl: './lib/',
+    baseUrl: './',
     dir: './',
     paths: {
         jquery: 'jquery.min',
 		alertMsg: 'alerMsg/alertMsg',
-		H5Form: 'H5Form/H5Form'
+		citySelect: "citySelect/citySelect",
+		formValidator: "H5Form/formValidator",
+		formSubmit: "H5Form/formSubmit",
+		paging: "paging/paging",
+		shareWX: "shareWX/shareWX",
     },
     modules: [
         {

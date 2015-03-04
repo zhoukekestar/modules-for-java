@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="//cdn.bootcss.com/jquery-mobile/1.4.3/jquery.mobile.css" />
+	<script src="//cdn.bootcss.com/jquery/2.1.3/jquery.js"></script>
+	<script src="//cdn.bootcss.com/jquery-mobile/1.4.3/jquery.mobile.js"></script>
+	<script>
+	console.log("head page");
+	</script>
+</head>
+<body>
+	<script>
+	console.log("before page");
+	</script>
+	<div data-role="page">
+		<div data-role="header">
+			<h1>Page2</h1>
+		</div>
+		<!-- /header -->
+		<script>
+		console.log("in page");
+		</script>
+		<div role="main" class="ui-content">
+			<p>Page2</p>
+
+			<script type="text/javascript">
+				var a = "a";
+				var b = "b";
+				console.log("page2.html");
+			</script>
+		</div>
+		<!-- /content -->
+
+
+	</div>
+	<!-- /page -->
+	
+		
+	<script>
+		console.log("after page");
+	</script>
+</body>
+</html>

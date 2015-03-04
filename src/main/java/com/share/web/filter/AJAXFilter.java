@@ -22,15 +22,16 @@ public class AJAXFilter implements Filter {
 		if ( 
 			(req.getHeader("Accept").indexOf("text/javascript") != -1 || req.getHeader("Accept").indexOf("application/javascript") != -1) 
 			&& req.getParameter("callback") != null
-		   )
+		   ) {
 			ajax = true;
+		}
 		
 		if (ajax)
 			response.getWriter().write(request.getParameter("callback") + "(");
+		response.setContentType("application/json;charset=UTF-8");
 		
 		chain.doFilter(request, response);
 		
-		response.setContentType("application/json;charset=UTF-8");
 		if (ajax)
 			response.getWriter().write(")");
 	}

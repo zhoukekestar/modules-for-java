@@ -1,32 +1,21 @@
-<%@page import="com.share.web.module.share.wx.WXSignBean"%>
-<%@page import="com.share.web.module.share.wx.WXParams"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="w" tagdir="/WEB-INF/tags/" %>
 <!DOCTYPE html>
 <html>
 <head>
+
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <%@include file="include.jsp" %>
 
-<%
-	long time = WXParams.getTimestamp();
-	String randomStr = WXParams.getRandomStr();
-	
-		WXSignBean bean = new WXSignBean();
-		bean.setJsapi_ticket(WXParams.getJSAPITicket());
-		bean.setNoncestr(randomStr);
-		bean.setTimestamp(String.valueOf(time));
-		bean.setUrl(request.getScheme()+"://m.toomao.com" + request.getRequestURI() + "?" + request.getQueryString());
-	
-	String sign = WXParams.getSign(bean);
-%>
 </head>
 <body>
+	<w:shareWX url="" save="share"></w:shareWX>
 	<script>
 	$.shareWXConfig({
-	    appId: 'wx5298b809a29cb9b0', // 必填，公众号的唯一标识
-	    timestamp: <%=time%>, // 必填，生成签名的时间戳
-	    nonceStr: '<%=randomStr %>', // 必填，生成签名的随机串
-	    signature: '<%=sign %>',// 必填，签名，见附录1
+	    appId: "${share.appID}", // 必填，公众号的唯一标识
+	    timestamp: "${share.time}", // 必填，生成签名的时间戳
+	    nonceStr: "${share.randomStr}", // 必填，生成签名的随机串
+	    signature: "${share.sign}",// 必填，签名，见附录1
 	    success:function(){
 	    	
 	    	$.shareWX({

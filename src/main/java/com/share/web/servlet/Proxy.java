@@ -18,10 +18,10 @@ public class Proxy extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String method = req.getParameter("method");
-		String url = req.getParameter("url");
+		String url = req.getParameter("proxy");
 		if (null == url || null == method)
 			resp.getWriter().print("url OR method not found.");
-		else
+		else;
 		{
 			HttpRequest request = null;
 			if (method.equalsIgnoreCase("get"))
@@ -35,8 +35,8 @@ public class Proxy extends HttpServlet {
 			else
 				request = HttpRequest.get(url);
 			
-			resp.getWriter().write(request.body());
 			resp.setHeader("Set-cookie", request.header("Set-cookie"));
+			resp.getWriter().write(request.body());
 		}
 	}
 	

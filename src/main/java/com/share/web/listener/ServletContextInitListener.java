@@ -8,6 +8,12 @@ import org.apache.log4j.Logger;
 
 import com.share.web.config.JSPConfig;
 
+/***
+ * Set JSPConfig to application scope on ServletContextInit.
+ * JSP can use its by EL express as like: ${base}
+ * @author zhoukeke
+ *
+ */
 @WebListener
 public class ServletContextInitListener implements ServletContextListener {
 
