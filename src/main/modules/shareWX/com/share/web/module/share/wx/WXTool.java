@@ -19,9 +19,10 @@ public class WXTool {
 	
 	private static Logger logger = Logger.getLogger(WXTool.class);
 	
+	public static String DOMAIN	 = "toomao.com";
 	public static String APPID = "wx5298b809a29cb9b0";
 	public static String SECRET = "e4ad79b13fa9e86b8c8f3869f0e425be";
-	public static boolean DEBUG	= false;
+	public static boolean DEBUG	= true;
 	
 	/***
 	 * 获取accessToken相关参数
@@ -72,8 +73,11 @@ public class WXTool {
 	 */
 	private static String getJSAPITicket()
 	{
-		if (jsAPITicket == null || (new Date()).getTime() > (jsAPITicket_Time + jsAPITicket_Expire * 1000) )
+		if (jsAPITicket == null || (new Date()).getTime() > (jsAPITicket_Time + jsAPITicket_Expire * 1000) ) {
+			
+			logger.debug("cur:" + (new Date()).getTime() + "  js:" + jsAPITicket_Time + " expi:" + jsAPITicket_Expire + " all:" + (jsAPITicket_Time + jsAPITicket_Expire * 1000));
 			freshJSAPITicket();
+		}
 		return jsAPITicket;
 		
 	}
@@ -86,9 +90,18 @@ public class WXTool {
 		if (DEBUG)
 			logger.debug("jsAPITicket:" + body);
 		
+		// access 无效的情况
+		if (obj.getIntValue("errcode") == 42001) {
+			
+			freshAccessToken();
+			body = HttpRequest.get("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=" + getAccessToken() + "&type=jsapi").body();
+			obj = JSON.parseObject(body);
+			logger.debug("err:42001 after:" + body);
+		}
+		
 		jsAPITicket 		= obj.getString("ticket");
 		jsAPITicket_Expire 	= obj.getLongValue("expires_in");
-		accessToken_Time 	= (new Date()).getTime();
+		jsAPITicket_Time 	= (new Date()).getTime();
 	}
 	
 	
@@ -98,9 +111,6 @@ public class WXTool {
 	 */
 	private static long getTimestamp(){
 		long temp = (new Date()).getTime();
-		
-		if (DEBUG)
-			logger.debug("timestamp:" + temp);
 		return temp;
 	}
 	
@@ -111,9 +121,6 @@ public class WXTool {
 	private static String getRandomStr(){
 		String str = UUID.randomUUID().toString();
 		str = str.replaceAll("-", "");
-		
-		if (DEBUG)
-			logger.debug("randomstr:" + str.substring(0, 16));
 		return str.substring(0, 16);
 	}
 	
@@ -203,10 +210,10 @@ public class WXTool {
 		params.put("url", url);
 		
 		WXBean bean = new WXBean();
-		bean.setRandomStr(randomStr);
-		bean.setTime(time);
-		bean.setSign(WXTool.getSign(params));
-		bean.setAppID(APPID);
+		bean.setNonceStr(randomStr);
+		bean.setTimestamp(time);
+		bean.setSignature(WXTool.getSign(params));
+		bean.setAppId(APPID);
 		
 		return bean;
 	}

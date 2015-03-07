@@ -67,9 +67,9 @@
 
     DragLoader.prototype = {
         STATUS: {
-            default: 'default',
-            prepare: 'prepare',
-            load: 'load'
+            "default": 'default',
+            "prepare": 'prepare',
+            "load": 'load'
         },
 
         _createDragDownRegion: function() {

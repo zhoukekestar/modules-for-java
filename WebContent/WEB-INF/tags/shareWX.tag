@@ -5,16 +5,26 @@
 <%@attribute name="url" required="true" %>
 <%@attribute name="save" required="true" %>
 <%
+	Logger logger = Logger.getLogger("/WEB-INF/tags/shareWX.tag");
 	try{
 		if (url.equals(""))
-			url = request.getScheme()+"://m.toomao.com" + request.getRequestURI() + "?" + request.getQueryString();
+		{
+			if (request.getQueryString() != null)
+				url = request.getScheme() + "://" + request.getServerName() + request.getRequestURI() + "?" + request.getQueryString();
+			else
+				url = request.getScheme() + "://" + request.getServerName() + request.getRequestURI();
+			
+		}
+		
 		
 		WXBean bean = WXTool.getBean(url);
-		request.setAttribute(save, bean);
+		request.setAttribute(save, JSON.toJSONString(bean));
+		logger.debug(url);
+		logger.debug("json:" + JSON.toJSONString(bean));
 	}
 	catch(Exception e)
 	{
-		Logger logger = Logger.getLogger("/WEB-INF/tags/shareWX.tag");
+		logger.error(e);
 		e.printStackTrace();
 	}
 %>

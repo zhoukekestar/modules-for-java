@@ -1,5 +1,5 @@
 
-;define("formSubmit", ["formValidator"], function(validInput){
+;define(["formValidator"], function(validInput){
 	// Form submit util function
 	$.fn.formSubmit = function(options){
 		options = $.extend({

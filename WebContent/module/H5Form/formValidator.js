@@ -5,7 +5,7 @@
  * ======================================================================== */
 
 
-;define("formValidator", ["alertMsg"], function($){
+;define(["alertMsg"], function($){
 	var validFunc = {
 		// Form validation: type=[email,number,cellphone]
 		type: function(ele){

@@ -6,34 +6,34 @@ package com.share.web.module.share.wx;
  *
  */
 public class WXBean {
-	private String time;
-	private String randomStr;
-	private String sign;
-	private String appID;
+	private String timestamp;
+	private String nonceStr;
+	private String signature;
+	private String appId;
+	public String getTimestamp() {
+		return timestamp;
+	}
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
+	}
+	public String getNonceStr() {
+		return nonceStr;
+	}
+	public void setNonceStr(String nonceStr) {
+		this.nonceStr = nonceStr;
+	}
+	public String getSignature() {
+		return signature;
+	}
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
+	public String getAppId() {
+		return appId;
+	}
+	public void setAppId(String appId) {
+		this.appId = appId;
+	}
 	
-	public String getAppID() {
-		return appID;
-	}
-	public void setAppID(String appID) {
-		this.appID = appID;
-	}
-	public String getTime() {
-		return time;
-	}
-	public void setTime(String time) {
-		this.time = time;
-	}
-	public String getRandomStr() {
-		return randomStr;
-	}
-	public void setRandomStr(String randomStr) {
-		this.randomStr = randomStr;
-	}
-	public String getSign() {
-		return sign;
-	}
-	public void setSign(String sign) {
-		this.sign = sign;
-	}
 	
 }

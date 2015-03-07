@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+  <Server port="8005" shutdown="SHUTDOWN">
+
+  <Listener className="org.apache.catalina.core.JasperListener"/>
+  <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener"/>
+  <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener"/>
+  <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener"/>
+
+  <Service name="Catalina">
+
+    <Connector 
+	    URIEncoding="UTF-8" 
+	    connectionTimeout="20000" 
+	    port="8080" 
+	    protocol="HTTP/1.1"
+	    useBodyEncodingForURI="true" />
+
+   
+    <Engine defaultHost="localhost" name="Catalina">
+      <Host appBase="webapps" autoDeploy="true" name="localhost" unpackWARs="true"></Host>
+    </Engine>
+  </Service>
+</Server>
