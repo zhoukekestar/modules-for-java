@@ -50,7 +50,7 @@
 			setTimeout( function() {
 				$( ".alert-msg-content" ).animate( { opacity: 0 }, "slow", function() {
 					$( ".alert-msg-content" ).remove();
-					options.done();
+					typeof(options.done) == "function" ? options.done() : "";
 				});
 			}, options.time );
 		}

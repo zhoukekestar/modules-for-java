@@ -1,6 +1,7 @@
 package com.share.web.servlet;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +20,7 @@ public class Proxy extends HttpServlet {
 			throws ServletException, IOException {
 		String method = req.getParameter("method");
 		String url = req.getParameter("proxy");
+		url = URLDecoder.decode(url);
 		if (null == url || null == method)
 			resp.getWriter().print("url OR method not found.");
 		else;
