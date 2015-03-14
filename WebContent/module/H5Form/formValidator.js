@@ -112,7 +112,7 @@
 	}
 	
 	// Form validation init.
-	$("form[data-role='H5Form']").find("input").each(function(){
+	$("form[data-role='H5Form']").find("input[type!='hidden']").each(function(){
 		// Get group
 		var group = $(this).parents(".form-group")[0];
 		
@@ -130,4 +130,3 @@
 	
 	return validInput;
 });
-
