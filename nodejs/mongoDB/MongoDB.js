@@ -1,13 +1,13 @@
 var MongoClient = require('mongodb').MongoClient;
 var ObjectID = require("mongodb").ObjectID;
 
+//var url = "mongodb://toomao:toomaologs@10.160.30.221:27019/logs?authSource=admin";
+var url = "mongodb://sa:sa123@192.168.0.199:27017/logs?authSource=admin";
 var mongoDB;
-MongoClient.connect("mongodb://sa:sa123@192.168.0.199:27017/express?authSource=admin", function(err, db){
+MongoClient.connect(url, function(err, db){
 	if (err)
 		console.log(err);
 	mongoDB = db;
-	
-
 
 });
 

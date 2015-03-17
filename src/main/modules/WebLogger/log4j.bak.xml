@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration>
+
+	<appender name="WEBLOG" class="com.share.java.modules.weblogger.WebLogger">
+		<param name="api" value="http://logs.toomao.com/MongoDB/logs/toomao_mobile"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			
+			<param name="ConversionPattern" value=" [%t] %-5p %c:%L l%ll - %m%n" />
+		</layout>
+	</appender>	
+
+	<appender name="ASYNC" class="org.apache.log4j.AsyncAppender">
+		<param name="BufferSize" value="256" />
+		<param name="LocationInfo" value="true" />
+		<appender-ref ref="WEBLOG" />
+	</appender>
+
+	<root>
+		<priority value="debug" />
+		<appender-ref ref="ASYNC" />
+	</root>
+
+</log4j:configuration>

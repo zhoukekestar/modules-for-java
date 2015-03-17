@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/modules/WebLogger"/>
 	<classpathentry kind="src" path="src/main/modules/shareWX"/>
 	<classpathentry kind="src" path="src/main/res"/>
 	<classpathentry kind="src" path="src/test/java"/>
