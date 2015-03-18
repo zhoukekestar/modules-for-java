@@ -26,10 +26,10 @@ public class AJAXFilter implements Filter {
 			ajax = true;
 		}
 		
-		if (ajax)
+		if (ajax) {
+			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().write(request.getParameter("callback") + "(");
-		response.setContentType("application/json;charset=UTF-8");
-		
+		}
 		chain.doFilter(request, response);
 		
 		if (ajax)

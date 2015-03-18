@@ -66,6 +66,7 @@ public class WebLogger extends AppenderSkeleton {
 				HttpRequest.post(api).send("doc=" + JSON.toJSONString(msg)).code();
 			}
 		} catch (Exception e) {
+			
 			e.printStackTrace();
 		}
 	}

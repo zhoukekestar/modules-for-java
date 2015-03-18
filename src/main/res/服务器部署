@@ -1,0 +1,23 @@
+
+
+---------------------部署前--------------------------------
+修改res文件夹下的
+	修改serverConfig.local.properties，serverConfig.properties
+	log4j.xml 去掉ASYN的注释，将STDOUT注释掉
+
+
+
+
+---------------------部署时--------------------------------
+服务器部署地址，部署时重启tomcat
+115.29.198.24 
+	/usr/local/tomcat8081
+112.124.20.84
+	/usr/local/tomcat8081
+
+
+
+
+---------------------部署后--------------------------------
+访问url：
+http://m.toomao.com/toomao_extend/activity.jsp

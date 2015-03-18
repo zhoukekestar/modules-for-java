@@ -4,8 +4,11 @@
 <log4j:configuration>
 
 	<appender name="WEBLOG" class="com.share.java.modules.weblogger.WebLogger">
-		<param name="api" value="http://logs.toomao.com/MongoDB/logs/toomao_mobile"/>
-		<!-- <param name="api" value="http://127.0.0.1:3000/MongoDB/logs/toomao_mobile"/> -->
+	
+		<param name="api" value="http://logs.toomao.com/MongoDB/logs/web-modules"/>
+		<!--  _______________________________________________________/改为自己的项目名   -->
+	
+		<!--  <param name="api" value="http://127.0.0.1:3000/MongoDB/logs/toomao_mobile"/>  -->
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%m" />
 		</layout>
@@ -16,10 +19,31 @@
 		<param name="LocationInfo" value="true" />
 		<appender-ref ref="WEBLOG" />
 	</appender>
+	
+	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{MM-dd HH\:mm\:ss} %-5p %c:%L - %m%n" />
+		</layout>
+	</appender>
+	
+	
+	<category name="org.hibernate">     
+    	<level value="ERROR" />
+  	</category>
+  	<category name="jacorb">     
+    	<level value="ERROR" />
+  	</category>
+  	<category name="org.springframework">     
+    	<level value="ERROR" />
+  	</category>
 
 	<root>
 		<priority value="debug" />
 		<appender-ref ref="ASYNC" />
+		<!-- 测试时将web日志关闭 -->
+		<appender-ref ref="STDOUT" />
+		<!-- 部署时请删除STDOUT输出 避免catlina.out太大 -->
 	</root>
 
 </log4j:configuration>
