@@ -15,3 +15,5 @@ hs_err_pid*
 /build
 /target
 node_modules
+output
+build
