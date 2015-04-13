@@ -1,7 +1,8 @@
 package com.share.web.servlet;
 
 import java.io.IOException;
-import java.net.URLDecoder;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,9 +19,12 @@ public class Proxy extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		// HTML request
+		if (req.getHeader("Accept").indexOf("text/html") != -1)
+			resp.setContentType("text/html");
+		
 		String method = req.getParameter("method");
 		String url = req.getParameter("proxy");
-		url = URLDecoder.decode(url);
 		if (null == url || null == method)
 			resp.getWriter().print("url OR method not found.");
 		else;
@@ -37,8 +41,18 @@ public class Proxy extends HttpServlet {
 			else
 				request = HttpRequest.get(url);
 			
-			resp.setHeader("Set-cookie", request.header("Set-cookie"));
-			resp.getWriter().write(request.body());
+			// Set request cookie from client request
+			request.header("Cookie", req.getHeader("Cookie"));
+			String body = request.body();
+			
+			// Set client cookie form request's response
+			Map<String, List<String>> headers = request.headers();
+			if (headers.get("Set-Cookie") != null) {
+				for (String head : headers.get("Set-Cookie")) {
+					resp.addHeader("Set-Cookie", head);
+				}
+			}
+			resp.getWriter().write(body);
 		}
 	}
 	
